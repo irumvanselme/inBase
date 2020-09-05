@@ -1,0 +1,9 @@
+GET {{link}}/tables
+Accept: application/json
+Content-Type: application/json
+app-orgin: from_anselme
+Authorization: Bearer {{ token }}
+
+
+###
+

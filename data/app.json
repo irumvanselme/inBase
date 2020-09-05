@@ -1,0 +1,156 @@
+{
+	"settings": {
+		"app_name": "anselme's solutions",
+		"app_desc": "anselme's solutions is the app for anselme which he made for himself to solve his problems he used to meet with. So he decided to use the knowledge he has got to solve his problems by making this app",
+		"theme": "black"
+	},
+	"apps": [
+		{
+			"name": "Projects",
+			"color": "red",
+			"sidebar": [
+				{
+					"name": "All Projects",
+					"to": "/projects"
+				},
+				{
+					"name": "Create new Project",
+					"to": "/projects/add"
+				}
+			]
+		},
+		{
+			"name": "Lists",
+			"color": "lightgreen",
+			"sidebar": [
+				{
+					"name": "All Lists",
+					"to": ""
+				},
+				{
+					"name": "Create New List",
+					"to": ""
+				}
+			]
+		},
+		{
+			"name": "Time Table",
+			"color": "blue",
+			"sidebar": [
+				{
+					"name": "All Activities",
+					"to": ""
+				},
+				{
+					"name": "Create New Activities",
+					"to": ""
+				},
+				{
+					"name": "Today Timetable"
+				}
+			]
+		},
+		{
+			"name": "Chat",
+			"color": "gold",
+			"sidebar": [
+				{
+					"name": "All Chats",
+					"to": ""
+				},
+				{
+					"name": "Create new chat Link",
+					"to": ""
+				}
+			]
+		},
+		{
+			"name": "Source Code",
+			"color": "purple",
+			"sidebar": [
+				{
+					"name": "All Source Codes",
+					"to": ""
+				},
+				{
+					"name": "Create new Source code",
+					"to": ""
+				}
+			]
+		},
+		{
+			"name": "Pages",
+			"color": "lightblue",
+			"sidebar": [
+				{
+					"name": "All Pages",
+					"to": ""
+				},
+				{
+					"name": "Create new Page",
+					"to": ""
+				}
+			]
+		},
+		{
+			"name": "Tasks",
+			"color": "grey",
+			"sidebar": [
+				{
+					"name": "All Tasks",
+					"to": ""
+				},
+				{
+					"name": "Create new Tasks",
+					"to": ""
+				}
+			]
+		}
+	],
+	"forgotPassword": {
+		"questNo": 5,
+		"maximum": 4,
+		"questions": [
+			{
+				"question": "What is Your Mothers Name ? ",
+				"answer": "KAMAGAJU Marie Gemma"
+			},
+			{
+				"question": "What is Your Fathers Name ? ",
+				"answer": "HABUMUGISHA Anselme"
+			},
+			{
+				"question": "In Which Year Where You born ? ",
+				"answer": "2003"
+			},
+			{
+				"question": "How Many Brothers Do You have ? ",
+				"answer": "4"
+			},
+			{
+				"question": "How Many Sisters Do You Have ? ",
+				"answer": "0"
+			},
+			{
+				"question": "Do You have any Girl Friend ? ",
+				"answer": "No"
+			},
+			{
+				"question": "What is the name of Your little last brother ?",
+				"answer": "MUHIRWA Lambert"
+			},
+			{
+				"question": "What is yout Email ?",
+				"answer": "andesanselme@gmail.com"
+			},
+			{
+				"question": "In Which school did You Finish your  O level schools ?",
+				"answer": "Petit Seminaire Saint Kizito Zaza"
+			},
+			{
+				"question": "In Which school did You Finish your Primary Schools ? ",
+				"answer": "Apeki-Amizero Primary School"
+			}
+		]
+	}
+}
