@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Data;
 use App\Database;
 use App\Table;
 use Exception;
@@ -57,6 +58,23 @@ class TableController extends Controller
     public function show(Table $table): JsonResponse
     {
         return response()->json($table);
+    }
+
+    public function tabular(Table $table): JsonResponse
+    {
+        $data = [];
+        $fields = $table->fields;
+        foreach ($table->entries as $entry){
+            $row = [];
+            $row["id"] = $entry["id"];
+            foreach ($fields as $field){
+                $row[$field["slug"]] = $entry->data()->where("field_id", "=", $field["_id"])->first()->data;
+            }
+
+            $data[] = $row;
+        }
+
+        return response()->json($data);
     }
 
     public function fields(Table $table): JsonResponse

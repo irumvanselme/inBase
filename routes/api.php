@@ -32,6 +32,7 @@ Route::group([ "middleware" => "jwt.verify" ] ,function (){
 
     Route::group([ "prefix" => "tables" ], function(){
         Route::get("{table}", "TableController@show");
+        Route::get("{table}/tabular", "TableController@tabular");
         Route::get("{table}/entries", "EntryController@index");
         Route::post("{table}/entries", "EntryController@create");
         Route::get("search/{query}", "TableController@search");
