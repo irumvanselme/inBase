@@ -8,9 +8,15 @@ Route::group([ "middleware" => "jwt.verify" ] ,function (){
     Route::group(["prefix" => "databases"], function () {
         Route::get("/", "DatabaseController@index");
         Route::post("/", "DatabaseController@create");
-        Route::get("/{database}", "DatabaseController@show");
-        Route::put("/{database}", "DatabaseController@update");
-        Route::delete("/{database}", "DatabaseController@delete");
+        Route::group(["prefix" => "{database}"], function () {
+            Route::get("", "DatabaseController@show");
+            Route::put("", "DatabaseController@update");
+            Route::delete("", "DatabaseController@delete");
+            Route::group(["prefix" => "tables"], function () {
+                Route::get("", "TableController@index");
+                Route::post("", "TableController@create");
+            });
+        });
     });
 
     Route::group(["prefix" => "auth"], function () {
@@ -21,18 +27,11 @@ Route::group([ "middleware" => "jwt.verify" ] ,function (){
     });
 
     Route::group([ "prefix" => "tables" ], function(){
-        Route::get("", "TableController@index");
-        Route::post("", "TableController@create");
-        Route::get("/code/{code}", "TableController@code");
         Route::get("search/{query}", "TableController@search");
         Route::group(["prefix" => "{table}"], function () {
             Route::get("", "TableController@show");
-            Route::get("forms", "FormController@index");
             Route::get("fields", "TableController@fields");
-            Route::post("forms", "FormController@create");
             Route::put("", "TableController@edit");
-            Route::put("fields", "FieldController@update_fields");
-            Route::put("star", "TableController@star");
             Route::delete("", "TableController@delete");
         });
     });

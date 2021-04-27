@@ -16,46 +16,34 @@ class TableController extends Controller
         return response()->json($database->tables);
     }
 
-    public function create(Request $request)
+    public function create(Database $database, Request $request): JsonResponse
     {
         $validator = Validator::make($request->json()->all(), [
             "name" => "required|string|min:3|max:100",
             "description" => "string|min:10|max:255",
-            "fields" => "required|array|min:2"
+            "fields" => "required|array|min:2",
+            "fields.*.name" => "required|string|min:3",
+            "fields.*.validations" => "required|string|min:3",
         ]);
 
         if($validator->fails())
             return response()->json($validator->errors(), 400);
 
-        if(auth()->user()->tables()->where("name","=",$request->json()->get("name"))->first())
+        if($database->tables()->where("name","=",$request->json()->get("name"))->first())
             return response()->json(["name"=>["Table name already registered in your tables "]],400);
 
         $fields = $request->json()->get("fields");
 
         $fields_s = [];
-        foreach ($fields as $field){
-            if(is_array($field)) {
-                $validator = (new FieldController())->_validate($field);
-
-                if ($validator->fails())
-                    return response()->json($validator->errors(), 400);
-
-                $fields_s[] = $field["name"];
-            }else
-                return response()->json(["message"=>"Unsupported field type format"], 400);
-        }
+        foreach ($fields as $field) $fields_s[] = $field["name"];
 
         foreach ($fields_s as $string)
             if(array_count_values($fields_s)[$string] > 1)
                 return response()->json(["fields"=>["Every field name must be unique "]]);
 
-        $table = auth()->user()->tables()->create([
-            "code" => uniqid(),
+        $table = $database->tables()->create([
             "name" => $request->json()->get("name"),
-            "published" => false,
-            "star" => false,
             "description" => $request->json()->get("description"),
-            "has_api" => false,
             "__data_counter" => 0
         ]);
 
@@ -66,15 +54,18 @@ class TableController extends Controller
         return response()->json($table, 201);
     }
 
-    public function show(Table $table){
+    public function show(Table $table): JsonResponse
+    {
         return response()->json($table);
     }
 
-    public function fields(Table $table){
+    public function fields(Table $table): JsonResponse
+    {
         return response()->json($table->fields);
     }
 
-    public function edit(Request $request, Table $table){
+    public function edit(Request $request, Table $table): JsonResponse
+    {
         $validator = Validator::make($request->json()->all(), [
             "name" => "required|string|min:3",
             "description" => "required|string|min:10"
@@ -91,11 +82,7 @@ class TableController extends Controller
         return response()->json($table);
     }
 
-    public function star(Table $table){
-        return response()->json($table->update([ "star" => !$table->star ]));
-    }
-
-    public function delete(Table $table)
+    public function delete(Table $table): JsonResponse
     {
         foreach ($table->fields as $field)
             $field->delete();
@@ -110,34 +97,8 @@ class TableController extends Controller
         }
     }
 
-    public function code($code)
+    public function search($query): JsonResponse
     {
-        $table = Table::query()->where("code","=",$code)->get()->first();
-        if(!$table) return response()->json(["message" => "Table not found "], 404);
-        $entries = [];
-        $table->fields;
-        foreach ($table->entries as $entry) {
-            $entry_r = [];
-            $entry_r["id"] = $entry["id"];
-            foreach ($table->fields as $field) {
-                $entry_r[$field["slug"]] = $entry->data()->where("field_id", $field["_id"])->get()->first()["data"];
-            }
-            $entries[] = $entry_r;
-        }
-
-        return response()->json(compact("table", "entries"));
-    }
-
-    public function publish(Table $table)
-    {
-         return response()->json($table->update(["published" => !$table->published ]));
-    }
-
-    public function add_form(Table $table){
-        return $table->forms()->create(["auth-key"=>"random_key"]);
-    }
-
-    public function search($query){
         $query = "%".$query."%";
         return response()->json(auth()->user()->tables()->orWhere("name", "like", $query)
             ->orWhere("description", "like", $query)

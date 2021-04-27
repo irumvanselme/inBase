@@ -5,18 +5,17 @@ namespace App;
 use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
- * @property mixed fields
+ * @property mixed name
+ * @property mixed description
  * @property mixed __data_counter
- * @property mixed published
- * @property mixed forms
- * @property mixed api
+ * @property mixed fields
  * @property mixed entries
  */
+
 class Table extends Model
 {
     protected $fillable = [
         "name",
-        "published",
         "description",
         "__data_counter"
     ];
