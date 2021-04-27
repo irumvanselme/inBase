@@ -11,7 +11,7 @@ use Jenssegers\Mongodb\Eloquent\Model;
 class Entry extends Model
 {
     protected $fillable = [
-        "id", "user_id"
+        "id"
     ];
 
     public function data(){
