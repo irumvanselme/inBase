@@ -1,15 +1,19 @@
 <?php
 namespace App\Http\Controllers;
 
+
+use App\Database;
 use App\Table;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class TableController extends Controller
 {
-    public function index(){
-        return response()->json(auth()->user()->tables()->get(["name", "code", "star", "description"]));
+    public function index(Database $database): JsonResponse
+    {
+        return response()->json($database->tables);
     }
 
     public function create(Request $request)
