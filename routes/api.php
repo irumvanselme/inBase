@@ -31,6 +31,9 @@ Route::group([ "middleware" => "jwt.verify" ] ,function (){
     });
 
     Route::group([ "prefix" => "tables" ], function(){
+        Route::get("{table}", "TableController@show");
+        Route::get("{table}/entries", "EntryController@index");
+        Route::post("{table}/entries", "EntryController@create");
         Route::get("search/{query}", "TableController@search");
         Route::group(["prefix" => "{table}"], function () {
             Route::get("", "TableController@show");
@@ -41,17 +44,10 @@ Route::group([ "middleware" => "jwt.verify" ] ,function (){
     });
 
     Route::group([ "prefix" => "entries" ], function () {
-        Route::get("", "EntryController@index");
         Route::post("{table}", "EntryController@create");
         Route::get("{table}/search/{querry}", "EntryController@search");
         Route::get("{entry}", "EntryController@show");
         Route::put("{entry}", "EntryController@update");
         Route::delete("{entry}", "EntryController@delete");
-    });
-
-    Route::group(["prefix" => "apis"], function (){
-        Route::post("{table}", "ApiController@add");
-        Route::put("{api}/activate", "ApiController@activate");
-        Route::put("{api}", "ApiController@edit");
     });
 });

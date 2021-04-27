@@ -6,24 +6,26 @@ use App\Data;
 use App\Entry;
 use App\Table;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class EntryController extends Controller
 {
-    public function index(){
-        return response()->json(Entry::all());
+    public function index(Table $table): JsonResponse
+    {
+        return response()->json($table->entries);
     }
 
-    public function create(Request $request, Table $table){
+    public function create(Request $request, Table $table): JsonResponse
+    {
         $fields = $table->fields;
 
         $validator = $this->_validate($fields, $request->json()->all());
         if($validator->fails()) return response()->json($validator->errors(), 400);
 
         $entry = $table->entries()->create([
-            "id" => $table->__id(),
-            "user_id" => $request->json()->get("user_id")
+            "id" => $table->__id()
         ]);
 
         foreach ($fields as $field)
@@ -32,11 +34,13 @@ class EntryController extends Controller
         return response()->json($entry, 201);
     }
 
-    public function show(Entry $entry){
+    public function show(Entry $entry): JsonResponse
+    {
         return response()->json($entry);
     }
 
-    public function update(Entry $entry, Request $request){
+    public function update(Entry $entry, Request $request): JsonResponse
+    {
         $fields = $entry->table->fields;
 
         $validator = $this->_validate($fields, $request->json()->all());
@@ -50,7 +54,8 @@ class EntryController extends Controller
         return response()->json(["message" => "Entry edited"]);
     }
 
-    public function delete(Entry $entry){
+    public function delete(Entry $entry): JsonResponse
+    {
         $data = $entry->data()->delete();
         foreach ($data as $datum)
             $datum->delete();
@@ -62,10 +67,11 @@ class EntryController extends Controller
         }
     }
 
-    public function _validate($fields, $data){
-        $validations["user_id"] = "required|string|min:3";
+    public function _validate($fields, $data): \Illuminate\Contracts\Validation\Validator
+    {
+        $validations = [];
         foreach ($fields as $field)
-            $validations[$field->slug] = $field->validations();
+            $validations[$field->slug] = $field->validations;
 
         return Validator::make($data, $validations);
     }
