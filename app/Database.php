@@ -4,10 +4,13 @@ namespace App;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
+/**
+ * @property mixed tables
+ */
 class Database extends Model
 {
     protected $fillable = [
-        "name", "name", "description", "key"
+        "name", "description", "key"
     ];
 
     public function user() {
