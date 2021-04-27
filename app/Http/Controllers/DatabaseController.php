@@ -12,7 +12,7 @@ class DatabaseController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(auth()->user()->database);
+        return response()->json(auth()->user()->databases);
     }
 
     public function show(Database $database): JsonResponse
@@ -25,13 +25,13 @@ class DatabaseController extends Controller
         $validator = Validator::make($request->json()->all(), [
             "name" => "required|string|min:3|max:100",
             "description" => "string|min:10|max:255",
-            "key" => "required|string|min:2"
+            "key" => "string|min:2"
         ]);
 
         if($validator->fails())
             return response()->json($validator->errors(), 400);
 
-        $database = Database::query()->create([
+        $database = auth()->user()->databases()->create([
             "name" => $request->json()->get("name"),
             "description" => $request->json()->get("description"),
             "key" => $request->json()->get("key")
@@ -45,7 +45,7 @@ class DatabaseController extends Controller
         $validator = Validator::make($request->json()->all(), [
             "name" => "required|string|min:3|max:100",
             "description" => "string|min:10|max:255",
-            "key" => "required|string|min:2"
+            "key" => "string|min:2"
         ]);
 
         if($validator->fails())

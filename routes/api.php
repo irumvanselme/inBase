@@ -5,6 +5,14 @@ Route::get("/check-email", "UserController@check_email");
 Route::post("/login", "UserController@login");
 
 Route::group([ "middleware" => "jwt.verify" ] ,function (){
+    Route::group(["prefix" => "databases"], function () {
+        Route::get("/", "DatabaseController@index");
+        Route::post("/", "DatabaseController@create");
+        Route::get("/{database}", "DatabaseController@show");
+        Route::put("/{database}", "DatabaseController@update");
+        Route::delete("/{database}", "DatabaseController@delete");
+    });
+
     Route::group(["prefix" => "auth"], function () {
         Route::get("", "UserController@profile");
         Route::put("/edit", "UserController@edit");
