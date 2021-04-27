@@ -26,6 +26,10 @@ Route::group([ "middleware" => "jwt.verify" ] ,function (){
         Route::delete("/delete", "UserController@delete");
     });
 
+    Route::group(["prefix" => "fields"], function (){
+        Route::post("{table}", "FieldController@create");
+    });
+
     Route::group([ "prefix" => "tables" ], function(){
         Route::get("search/{query}", "TableController@search");
         Route::group(["prefix" => "{table}"], function () {

@@ -15,6 +15,24 @@ class FieldController extends Controller
         $this->create($request->json()->all(), $table);
     }
 
+    public function store(Request $request, Table $table): JsonResponse
+    {
+        $validator = Validator::make($request->json()->all(), [
+            "name" => "required|string|min:3|max:100",
+            "validations" => "string|min:3"
+        ]);
+
+        if ($validator->fails())
+            return response()->json($validator->errors(), 400);
+
+        $field = $table->fields()->create([
+            "name" => $request->json()->get("name"),
+            "validations" => $request->json()->get("validations"),
+        ]);
+
+        return response()->json($field);
+    }
+
     public function create($field_data, $table): JsonResponse
     {
         $field = $table->fields()->create($field_data);
