@@ -6,10 +6,8 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 /**
  * @property mixed fields
- * @property mixed star
  * @property mixed __data_counter
  * @property mixed published
- * @property mixed code
  * @property mixed forms
  * @property mixed api
  * @property mixed entries
@@ -20,8 +18,6 @@ class Table extends Model
         "name",
         "published",
         "description",
-        "star" ,
-        "code",
         "__data_counter"
     ];
 
@@ -37,8 +33,8 @@ class Table extends Model
         return $this->hasMany(Entry::class);
     }
 
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function database(){
+        return $this->belongsTo(Database::class);
     }
 
     public function forms(){
