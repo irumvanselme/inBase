@@ -16,8 +16,8 @@ class User extends Authenticatable implements JWTSubject
 
     public $timestamps = false;
 
-    public function tables(){
-        return $this->hasMany(Table::class);
+    public function databases(){
+        return $this->hasMany(Database::class);
     }
 
     public function getJWTIdentifier(){
