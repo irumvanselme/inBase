@@ -21,8 +21,6 @@ class Table extends Model
         "__data_counter"
     ];
 
-    public $timestamps = false;
-
     protected $hidden = ["__data_counter"];
 
     public function fields(){
