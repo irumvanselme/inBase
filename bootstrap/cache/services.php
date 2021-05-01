@@ -73,7 +73,6 @@
     'cache.store' => 'Illuminate\\Cache\\CacheServiceProvider',
     'cache.psr6' => 'Illuminate\\Cache\\CacheServiceProvider',
     'memcached.connector' => 'Illuminate\\Cache\\CacheServiceProvider',
-    'cache.dynamodb.client' => 'Illuminate\\Cache\\CacheServiceProvider',
     'command.cache.clear' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'command.cache.forget' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'command.clear-compiled' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',

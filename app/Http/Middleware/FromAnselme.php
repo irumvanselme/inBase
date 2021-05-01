@@ -18,7 +18,7 @@ class FromAnselme
 
     public function handle($request, Closure $next)
     {
-        if(!$request->hasHeader("app-orgin") || $request->header("app-orgin") != "from_anselme")
+        if(!$request->hasHeader("app-origin") || $request->header("app-origin") != "from anselme")
             return response()->json(["message"=>"This Application is for Authorized Users Only"]);
         else
             return $next($request);
