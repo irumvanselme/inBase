@@ -19,7 +19,7 @@ class FieldController extends Controller
     {
         $validator = Validator::make($request->json()->all(), [
             "name" => "required|string|min:3|max:100",
-            "validations" => "string|min:3"
+            "validations" => "required|string|min:3"
         ]);
 
         if ($validator->fails())

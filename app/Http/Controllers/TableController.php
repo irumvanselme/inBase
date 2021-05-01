@@ -67,9 +67,11 @@ class TableController extends Controller
         foreach ($table->entries as $entry){
             $row = [];
             $row["id"] = $entry["id"];
+            $row["entry_id"] = $entry["_id"];
             foreach ($fields as $field){
                 $row[$field["slug"]] = $entry->data()->where("field_id", "=", $field["_id"])->first()->data;
             }
+            $row["created_at"] = $entry["created_at"];
 
             $data[] = $row;
         }

@@ -39,6 +39,19 @@ class EntryController extends Controller
         return response()->json($entry);
     }
 
+    public function details(Entry $entry): JsonResponse
+    {
+        $row = [];
+        $row["id"] = $entry["id"];
+        $row["entry_id"] = $entry["_id"];
+        foreach ($entry->table->fields as $field){
+            $row[$field["slug"]] = $entry->data()->where("field_id", "=", $field["_id"])->first()->data;
+        }
+        $row["created_at"] = $entry["created_at"];
+
+        return response()->json($row);
+    }
+
     public function update(Entry $entry, Request $request): JsonResponse
     {
         $fields = $entry->table->fields;
@@ -54,9 +67,12 @@ class EntryController extends Controller
         return response()->json(["message" => "Entry edited"]);
     }
 
+    /**
+     * @throws Exception
+     */
     public function delete(Entry $entry): JsonResponse
     {
-        $data = $entry->data()->delete();
+        $data = $entry->data;
         foreach ($data as $datum)
             $datum->delete();
 
@@ -76,7 +92,8 @@ class EntryController extends Controller
         return Validator::make($data, $validations);
     }
 
-    public function search(Table $table, $query){
+    public function search(Table $table, $query): JsonResponse
+    {
         $entries = $table->entries;
         $query = "%".$query."%";
         $data = [];
